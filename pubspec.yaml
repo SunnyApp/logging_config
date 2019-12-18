@@ -1,8 +1,8 @@
-name: logging_isolate
-description: A plugin that makes it easier to configure logging in isolates
+name: logging_config
+description: A plugin that makes it easier to configure logging handlers and output, including loggers in isolates
 version: 0.4.4
 author:
-homepage: https://github.com/SunnyApp/logging_isolate
+homepage: https://github.com/SunnyApp/logging_config
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -10,6 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  logging: ^0.11.3+2
+  isolate: ^2.0.2
+  isolate_service:
+    path: ../isolate_service
 
 dev_dependencies:
   flutter_test:
