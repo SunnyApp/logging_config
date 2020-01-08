@@ -24,14 +24,18 @@ void main() {
   });
 
   test("logs in isolate work", () async {
-    configureLogging(LogConfig.single(loggerName: "bubbles", level: Level.FINER, handler: CapturingLogger()));
+    configureLogging(LogConfig.single(
+        loggerName: "bubbles", level: Level.FINER, handler: CapturingLogger()));
     final runner = RunnerFactory.global.create((isolate) => isolate
       ..debugName = "logTest"
       ..poolSize = 3);
     try {
-      await runner.run(logInIsolate, LogRecord(Level.WARNING, "I'm rad", "bubbles"));
-      await runner.run(logInIsolate, LogRecord(Level.FINER, "Fine should still show up", "bubbles"));
-      await runner.run(logInIsolate, LogRecord(Level.FINER, "No fine except bubbles", "unknown"));
+      await runner.run(
+          logInIsolate, LogRecord(Level.WARNING, "I'm rad", "bubbles"));
+      await runner.run(logInIsolate,
+          LogRecord(Level.FINER, "Fine should still show up", "bubbles"));
+      await runner.run(logInIsolate,
+          LogRecord(Level.FINER, "No fine except bubbles", "unknown"));
     } finally {
       runner.close();
     }
@@ -54,6 +58,6 @@ class CapturingLogger extends LoggingHandler {
 
 FutureOr logInIsolate(LogRecord message) {
   final logger = Logger(message.loggerName);
-  logger.log(message.level, "[${Isolate.current.debugName}] ${message.message}", message.error, message.stackTrace,
-      message.zone);
+  logger.log(message.level, "[${Isolate.current.debugName}] ${message.message}",
+      message.error, message.stackTrace, message.zone);
 }

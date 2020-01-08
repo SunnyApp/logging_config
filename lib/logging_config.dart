@@ -51,10 +51,15 @@ class LogConfig {
   /// logs
   final LoggingHandler handler;
 
-  LogConfig.single({String loggerName = "", Level level = Level.INFO, this.handler = const _ConsoleHandler()})
+  LogConfig.single(
+      {String loggerName = "",
+      Level level = Level.INFO,
+      this.handler = const _ConsoleHandler()})
       : logLevels = {loggerName: level};
 
-  LogConfig({this.logLevels = const <String, Level>{}, this.handler = const _ConsoleHandler()});
+  LogConfig(
+      {this.logLevels = const <String, Level>{},
+      this.handler = const _ConsoleHandler()});
 }
 
 abstract class LoggingHandler {
@@ -81,7 +86,8 @@ class LoggerState {
   final LoggingHandler handler;
   final StreamSubscription<LogRecord> subscription;
 
-  LoggerState(this.logger, this.handler) : subscription = handler.listenTo(logger);
+  LoggerState(this.logger, this.handler)
+      : subscription = handler.listenTo(logger);
 }
 
 final _loggers = <String, LoggerState>{};
