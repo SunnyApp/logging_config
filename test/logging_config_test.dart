@@ -24,7 +24,7 @@ void main() {
   });
 
   test("logs in isolate work", () async {
-    configureLogging(LogConfig(loggerName: "bubbles", level: Level.FINER, handler: CapturingLogger()));
+    configureLogging(LogConfig.single(loggerName: "bubbles", level: Level.FINER, handler: CapturingLogger()));
     final runner = RunnerFactory.global.create((isolate) => isolate
       ..debugName = "logTest"
       ..poolSize = 3);

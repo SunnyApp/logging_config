@@ -19,42 +19,49 @@ Stream<LogConfig> get onLogConfigured => _configStream.stream;
 
 /// Configures a single logger - isolate friendly
 FutureOr configureLogging(LogConfig config) async {
-  _configStream.add(config);
-  print("[${Isolate.current.debugName}] Setting logger ${config.name} "
-      "to level ${config.level} "
-      "using handler: ${config.handler}");
-  RunnerFactory.global.addIsolateInitializer(_configureLoggingIsolate, config);
-
-  final existing = _loggers[config.loggerName];
   hierarchicalLoggingEnabled = true;
-  if (existing == null) {
-    _loggers.putIfAbsent(config.loggerName, () {
-      final logger = Logger(config.loggerName);
-      logger.level = config.level;
-      return LoggerState(logger, config.handler);
-    });
-  } else {
-    existing.logger.level = config.level;
-    existing.subscription.cancel();
-    _loggers[config.loggerName] = LoggerState(existing.logger, config.handler);
-  }
+  _configStream.add(config);
+  print(
+      "[${Isolate.current.debugName}] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
+      "to use ${config.handler.runtimeType}");
+  RunnerFactory.global.addIsolateInitializer(_configureLoggingIsolate, config);
+  config.logLevels.forEach((name, level) {
+    final existing = _loggers[name];
+    hierarchicalLoggingEnabled = true;
+    if (existing == null) {
+      _loggers.putIfAbsent(name, () {
+        final logger = Logger(name);
+        logger.level = level;
+        return LoggerState(logger, config.handler);
+      });
+    } else {
+      existing.logger.level = level;
+      existing.subscription.cancel();
+      _loggers[name] = LoggerState(existing.logger, config.handler);
+    }
+  });
 }
 
 class LogConfig {
-  final String loggerName;
-  final Level level;
+  /// For named log levels, provides a log [Level].  The keys represent the logger name, and are hierarchical,
+  /// using a dot-separated pattern
+  final Map<String, Level> logLevels;
+
+  /// For all logger names specified as keys in [logLevels], determines which [LoggingHandler] is used to output
+  /// logs
   final LoggingHandler handler;
 
-  LogConfig({this.loggerName = "", this.level = Level.INFO, this.handler = const _ConsoleHandler()});
+  LogConfig.single({String loggerName = "", Level level = Level.INFO, this.handler = const _ConsoleHandler()})
+      : logLevels = {loggerName: level};
 
-  String get name {
-    if (loggerName.isEmpty) return "root";
-    return loggerName;
-  }
+  LogConfig({this.logLevels = const <String, Level>{}, this.handler = const _ConsoleHandler()});
 }
 
 abstract class LoggingHandler {
+  /// Outputs logs to the console, eg stdout
   factory LoggingHandler.console() => const _ConsoleHandler();
+
+  /// Outputs logs using [dart:developer] log function
   factory LoggingHandler.dev() => _DevLogger();
 
   const LoggingHandler();

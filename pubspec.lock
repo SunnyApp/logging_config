@@ -75,12 +75,12 @@ packages:
     source: hosted
     version: "2.1.4"
   isolate:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      name: isolate
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
+      path: "../isolate"
+      relative: true
+    source: path
+    version: "2.0.3"
   isolate_service:
     dependency: "direct main"
     description:
