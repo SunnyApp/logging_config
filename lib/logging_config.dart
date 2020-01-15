@@ -57,6 +57,9 @@ class LogConfig {
       this.handler = const _ConsoleHandler()})
       : logLevels = {loggerName: level};
 
+  LogConfig.root(Level level, {this.handler = const _ConsoleHandler()})
+      : logLevels = {"": level ?? Level.INFO};
+
   LogConfig(
       {this.logLevels = const <String, Level>{},
       this.handler = const _ConsoleHandler()});

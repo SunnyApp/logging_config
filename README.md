@@ -1,14 +1,21 @@
-# logging_isolate
+# logging_config
 
-A new Flutter package project.
+[![pub package](https://img.shields.io/pub/v/logging_config.svg)](https://pub.dartlang.org/packages/logging_config)
+[![Coverage Status](https://coveralls.io/repos/github/SunnyApp/logging_config/badge.svg?branch=master)](https://coveralls.io/github/SunnyApp/logging_config?branch=master)
 
-## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+A plugin that helps you configure loggers from the [logger] package, particularly across spawned isolates.  
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+### Usage
+
+#### Configure the root logger
+```
+/// Configure the root logger
+configureLogging(LogConfig.root(Level.WARN));
+
+/// Configure the log output handler
+/// By default, you can use LoggingHandler.console() or LoggingHandler.dev() or
+/// you could implement your own that writes logs to an external system
+configureLogging(LogConfig(logLevels: {"myLoggerName": Level.INFO}, 
+	handler: LoggingHandler.dev()));
+```
