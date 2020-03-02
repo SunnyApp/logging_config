@@ -80,13 +80,13 @@ packages:
       name: isolate
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   isolate_service:
     dependency: "direct main"
     description:
-      name: isolate_service
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../isolate_service"
+      relative: true
+    source: path
     version: "0.4.6"
   logging:
     dependency: "direct main"
