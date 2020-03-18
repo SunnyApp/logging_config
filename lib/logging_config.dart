@@ -2,7 +2,6 @@ library logging_config;
 
 import 'dart:async';
 import 'dart:developer' as dev;
-import 'dart:isolate';
 
 import 'package:isolate_service/isolate_service.dart';
 import 'package:logging/logging.dart';
@@ -22,7 +21,7 @@ FutureOr configureLogging(LogConfig config) async {
   hierarchicalLoggingEnabled = true;
   _configStream.add(config);
   print(
-      "[${Isolate.current.debugName}] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
+      "[$currentIsolateName] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
       "to use ${config.handler.runtimeType}");
   RunnerFactory.global.addIsolateInitializer(_configureLoggingIsolate, config);
   config.logLevels.forEach((name, level) {
@@ -51,18 +50,12 @@ class LogConfig {
   /// logs
   final LoggingHandler handler;
 
-  LogConfig.single(
-      {String loggerName = "",
-      Level level = Level.INFO,
-      this.handler = const _ConsoleHandler()})
+  LogConfig.single({String loggerName = "", Level level = Level.INFO, this.handler = const _ConsoleHandler()})
       : logLevels = {loggerName: level};
 
-  LogConfig.root(Level level, {this.handler = const _ConsoleHandler()})
-      : logLevels = {"": level ?? Level.INFO};
+  LogConfig.root(Level level, {this.handler = const _ConsoleHandler()}) : logLevels = {"": level ?? Level.INFO};
 
-  LogConfig(
-      {this.logLevels = const <String, Level>{},
-      this.handler = const _ConsoleHandler()});
+  LogConfig({this.logLevels = const <String, Level>{}, this.handler = const _ConsoleHandler()});
 }
 
 abstract class LoggingHandler {
@@ -89,8 +82,7 @@ class LoggerState {
   final LoggingHandler handler;
   final StreamSubscription<LogRecord> subscription;
 
-  LoggerState(this.logger, this.handler)
-      : subscription = handler.listenTo(logger);
+  LoggerState(this.logger, this.handler) : subscription = handler.listenTo(logger);
 }
 
 final _loggers = <String, LoggerState>{};

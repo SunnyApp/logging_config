@@ -87,7 +87,7 @@ packages:
       path: "../isolate_service"
       relative: true
     source: path
-    version: "0.4.6"
+    version: "0.4.7"
   logging:
     dependency: "direct main"
     description:
