@@ -5,6 +5,10 @@ import 'dart:developer' as dev;
 
 import 'package:isolate_service/isolate_service.dart';
 import 'package:logging/logging.dart';
+import 'console_interface.dart'
+if (dart.library.io) 'console_io.dart'
+if (dart.library.js) 'console_web.dart';
+
 
 /// Logging stream consumer
 typedef Logging = void Function(LogRecord record);
@@ -50,20 +54,20 @@ class LogConfig {
   /// logs
   final LoggingHandler handler;
 
-  LogConfig.single({String loggerName = "", Level level = Level.INFO, this.handler = const _ConsoleHandler()})
+  LogConfig.single({String loggerName = "", Level level = Level.INFO, this.handler = const ConsoleHandler()})
       : logLevels = {loggerName: level};
 
-  LogConfig.root(Level level, {this.handler = const _ConsoleHandler()}) : logLevels = {"": level ?? Level.INFO};
+  LogConfig.root(Level level, {this.handler = const ConsoleHandler()}) : logLevels = {"": level ?? Level.INFO};
 
-  LogConfig({this.logLevels = const <String, Level>{}, this.handler = const _ConsoleHandler()});
+  LogConfig({this.logLevels = const <String, Level>{}, this.handler = const ConsoleHandler()});
 }
 
 abstract class LoggingHandler {
   /// Outputs logs to the console, eg stdout
-  factory LoggingHandler.console() => const _ConsoleHandler();
+  factory LoggingHandler.console() => const ConsoleHandler();
 
   /// Outputs logs using [dart:developer] log function
-  factory LoggingHandler.dev() => _DevLogger();
+  factory LoggingHandler.dev() => DevLogger();
 
   const LoggingHandler();
   void log(LogRecord record);
@@ -87,16 +91,16 @@ class LoggerState {
 
 final _loggers = <String, LoggerState>{};
 
-class _ConsoleHandler extends LoggingHandler {
-  const _ConsoleHandler();
+class ConsoleHandler extends LoggingHandler {
+  const ConsoleHandler();
 
   @override
   void log(LogRecord record) {
-    print(record?.toString());
+    logToConsole(record);
   }
 }
 
-class _DevLogger extends LoggingHandler {
+class DevLogger extends LoggingHandler {
   var _sequence = 0;
 
   @override
