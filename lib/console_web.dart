@@ -2,18 +2,18 @@
 library console_web; // required library declaration called main, or whatever name you wish
 
 import 'package:js/js.dart';
-import 'package:logging/logging.dart'; // Pull in our dependency
+import 'package:logging/logging.dart';
 
-@JS('console.info') // This marks the annotated function as a call to `console.log`
+@JS('console.info')
 external void _info(dynamic str);
 
-@JS('console.error') // This marks the annotated function as a call to `console.log`
+@JS('console.error')
 external void _error(dynamic str);
 
-@JS('console.debug') // This marks the annotated function as a call to `console.log`
+@JS('console.debug')
 external void _debug(dynamic str);
 
-@JS('console.warn') // This marks the annotated function as a call to `console.log`
+@JS('console.warn')
 external void _warn(dynamic str);
 
 typedef LogMethod = void Function(dynamic message);

@@ -81,13 +81,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
-  isolate_service:
-    dependency: "direct main"
-    description:
-      path: "../isolate_service"
-      relative: true
-    source: path
-    version: "0.4.7"
   js:
     dependency: "direct main"
     description:
@@ -124,12 +117,12 @@ packages:
     source: hosted
     version: "1.6.4"
   pedantic:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0+1"
+    version: "1.9.0"
   petitparser:
     dependency: transitive
     description:
@@ -190,7 +183,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.15"
+    version: "0.2.11"
   typed_data:
     dependency: transitive
     description:
@@ -205,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  worker_service:
+    dependency: "direct main"
+    description:
+      name: worker_service
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1"
   xml:
     dependency: transitive
     description:

@@ -3,12 +3,12 @@ library logging_config;
 import 'dart:async';
 import 'dart:developer' as dev;
 
-import 'package:isolate_service/isolate_service.dart';
 import 'package:logging/logging.dart';
-import 'console_interface.dart'
-if (dart.library.io) 'console_io.dart'
-if (dart.library.js) 'console_web.dart';
+import 'package:worker_service/worker_service.dart';
 
+import 'console_interface.dart'
+    if (dart.library.io) 'console_io.dart'
+    if (dart.library.js) 'console_web.dart';
 
 /// Logging stream consumer
 typedef Logging = void Function(LogRecord record);
@@ -54,12 +54,18 @@ class LogConfig {
   /// logs
   final LoggingHandler handler;
 
-  LogConfig.single({String loggerName = "", Level level = Level.INFO, this.handler = const ConsoleHandler()})
+  LogConfig.single(
+      {String loggerName = "",
+      Level level = Level.INFO,
+      this.handler = const ConsoleHandler()})
       : logLevels = {loggerName: level};
 
-  LogConfig.root(Level level, {this.handler = const ConsoleHandler()}) : logLevels = {"": level ?? Level.INFO};
+  LogConfig.root(Level level, {this.handler = const ConsoleHandler()})
+      : logLevels = {"": level ?? Level.INFO};
 
-  LogConfig({this.logLevels = const <String, Level>{}, this.handler = const ConsoleHandler()});
+  LogConfig(
+      {this.logLevels = const <String, Level>{"": Level.INFO},
+      this.handler = const ConsoleHandler()});
 }
 
 abstract class LoggingHandler {
@@ -86,7 +92,8 @@ class LoggerState {
   final LoggingHandler handler;
   final StreamSubscription<LogRecord> subscription;
 
-  LoggerState(this.logger, this.handler) : subscription = handler.listenTo(logger);
+  LoggerState(this.logger, this.handler)
+      : subscription = handler.listenTo(logger);
 }
 
 final _loggers = <String, LoggerState>{};
