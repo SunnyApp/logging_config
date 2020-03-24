@@ -12,6 +12,7 @@ dependencies:
   js: ^0.6.1+1
   logging: ^0.11.4
   worker_service: ^0.5.2
+  sunny_dart: ^0.5.5
   pedantic: ^1.8.0+1
 
 dev_dependencies:
