@@ -5,15 +5,15 @@ homepage: https://github.com/SunnyApp/logging_config
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
+  flutter: <3.0.0
 
 dependencies:
   flutter:
     sdk: flutter
-  js: ^0.6.1+1
+  js: ^0.6.2
   logging: ^0.11.4
   worker_service: ^0.5.2
-  sunny_dart: ^0.5.5
-  pedantic: ^1.8.0+1
+  sunny_dart: ^0.5.8+2
 
 dev_dependencies:
   flutter_test:
