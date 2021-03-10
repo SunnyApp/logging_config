@@ -9,7 +9,7 @@ dependencies:
   js: ^0.6.3
   logging: ^1.0.0
   sunny_dart: ^0.6.0+4
-  worker_service: ^0.5.2+3
+  worker_service: ^0.6.2+4
   flutter: 
     sdk: flutter
 dev_dependencies: 
