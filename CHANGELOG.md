@@ -1,3 +1,6 @@
+## [0.5.7+2]
+ * New version
+
 ## [0.5.7+1]
  * Gemfile
 Updated README
