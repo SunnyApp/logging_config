@@ -1,3 +1,6 @@
+## [0.5.7+3]
+ * Updating version
+
 ## [0.5.7+2]
  * New version
 
