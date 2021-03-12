@@ -15,10 +15,6 @@ LoggingEnvironment logEnvironment = LoggingEnvironment.defaults();
 /// Logging stream consumer
 typedef Logging = void Function(LogRecord record);
 
-FutureOr _configureLoggingIsolate(final dynamic p) async {
-  if (p is LogConfig) return await configureLogging(p);
-}
-
 final StreamController<LogConfig> _configStream = StreamController<LogConfig>();
 Stream<LogConfig> get onLogConfigured => _configStream.stream;
 
@@ -27,7 +23,7 @@ FutureOr configureLogging(LogConfig config) async {
   hierarchicalLoggingEnabled = true;
   _configStream.add(config);
   print(
-      "[${logEnvironment.envName}] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
+      "[${logEnvironment.envName}] Configuring loggers ${config.logLevels.keys.map((name) => name.isNotEmpty != true ? "root" : name).join(", ")} "
       "to use ${config.handler.runtimeType}");
 
   logEnvironment.onLogConfig(config);
@@ -64,7 +60,7 @@ class LogConfig {
       : logLevels = {loggerName: level};
 
   LogConfig.root(Level level, {this.handler = const ConsoleHandler()})
-      : logLevels = {"": level ?? Level.INFO};
+      : logLevels = {"": level};
 
   LogConfig(
       {this.logLevels = const <String, Level>{"": Level.INFO},
