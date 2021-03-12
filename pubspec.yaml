@@ -1,5 +1,5 @@
 name: logging_config
-version: 0.5.7+4
+version: 0.6.7+4
 homepage: https://github.com/SunnyApp/logging_config
 description: A plugin that makes it easier to configure logging handlers and output, including loggers in isolates
 environment: 
@@ -8,8 +8,7 @@ environment:
 dependencies: 
   js: ^0.6.3
   logging: ^1.0.0
-  sunny_dart: ^0.8.0+6
-  worker_service: ^0.7.2+7
+
   flutter: 
     sdk: flutter
 dev_dependencies: 

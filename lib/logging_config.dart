@@ -4,11 +4,13 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:logging/logging.dart';
-import 'package:worker_service/worker_service.dart';
+import 'package:logging_config/logging_environment.dart';
 
 import 'console_interface.dart'
     if (dart.library.io) 'console_io.dart'
     if (dart.library.js) 'console_web.dart';
+
+LoggingEnvironment logEnvironment = LoggingEnvironment.defaults();
 
 /// Logging stream consumer
 typedef Logging = void Function(LogRecord record);
@@ -25,9 +27,10 @@ FutureOr configureLogging(LogConfig config) async {
   hierarchicalLoggingEnabled = true;
   _configStream.add(config);
   print(
-      "[$currentIsolateName] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
+      "[${logEnvironment.envName}] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
       "to use ${config.handler.runtimeType}");
-  RunnerFactory.global.addIsolateInitializer(_configureLoggingIsolate, config);
+
+  logEnvironment.onLogConfig(config);
   config.logLevels.forEach((name, level) {
     final existing = _loggers[name];
     hierarchicalLoggingEnabled = true;
