@@ -1,3 +1,6 @@
+## [0.6.7+5]
+ * Removed dependencies on isolates/workers
+
 ## [0.5.7+3]
  * Updating version
 
