@@ -1,5 +1,5 @@
 name: logging_config
-version: 0.6.7+5
+version: 0.6.7+6
 homepage: https://github.com/SunnyApp/logging_config
 description: A plugin that makes it easier to configure logging handlers and output, including loggers in isolates
 environment: 

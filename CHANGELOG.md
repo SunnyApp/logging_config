@@ -1,3 +1,6 @@
+## [0.6.7+6]
+ * Getting rid of analyzer warnings
+
 ## [0.6.7+5]
  * Removed dependencies on isolates/workers
 
