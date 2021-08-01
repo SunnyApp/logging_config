@@ -1,3 +1,8 @@
+## [0.6.7+7]
+ * Gemfile
+Removing flutter dep
+Update bundle update
+
 ## [0.6.7+6]
  * Getting rid of analyzer warnings
 
