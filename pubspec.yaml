@@ -9,4 +9,6 @@ dependencies:
   logging: ^1.0.2
 dev_dependencies: 
   dartxx: 
-    path: /Users/ericm/sunny/trippi_plugins/dartxx
+    git: 
+      url: git@github.com:ericmartineau/dartxx.git
+      ref: trippi_app
