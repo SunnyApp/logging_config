@@ -1,25 +1,20 @@
 name: logging_config
-description: A plugin that makes it easier to configure logging handlers and output, including loggers in isolates
 version: 0.4.7
 homepage: https://github.com/SunnyApp/logging_config
-
-environment:
-  sdk: ">=2.6.0 <3.0.0"
-  flutter: <3.0.0
-
-dependencies:
-  flutter:
+description: A plugin that makes it easier to configure logging handlers and output, including loggers in isolates
+environment: 
+  sdk: '>=2.6.0 <3.0.0'
+  flutter: '<3.0.0'
+dependencies: 
+  js: ^0.6.4
+  logging: ^1.0.2
+  flutter: 
     sdk: flutter
-  js: ^0.6.2
-  logging: ^0.11.4
-  worker_service: ^0.5.2
-  sunny_dart: ^0.5.8+2
-
-dev_dependencies:
-  flutter_test:
+  worker_service: 
+    path: /Users/ericm/reliveit/checkout/SunnyApp/worker_service
+  sunny_dart: 
+    path: /Users/ericm/reliveit/checkout/SunnyApp/sunny_dart
+dev_dependencies: 
+  flutter_test: 
     sdk: flutter
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
-flutter:
+flutter: null
