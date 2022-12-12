@@ -4,18 +4,16 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 import 'package:logging/logging.dart';
-import 'package:worker_service/worker_service.dart';
+import 'package:logging_config/logging_environment.dart';
 
 import 'console_interface.dart'
     if (dart.library.io) 'console_io.dart'
     if (dart.library.js) 'console_web.dart';
 
+LoggingEnvironment logEnvironment = LoggingEnvironment.defaults();
+
 /// Logging stream consumer
 typedef Logging = void Function(LogRecord record);
-
-FutureOr _configureLoggingIsolate(final dynamic p) async {
-  if (p is LogConfig) return await configureLogging(p);
-}
 
 final StreamController<LogConfig> _configStream = StreamController<LogConfig>();
 Stream<LogConfig> get onLogConfigured => _configStream.stream;
@@ -25,9 +23,10 @@ FutureOr configureLogging(LogConfig config) async {
   hierarchicalLoggingEnabled = true;
   _configStream.add(config);
   print(
-      "[$currentIsolateName] Configuring loggers ${config.logLevels.keys.map((name) => name?.isNotEmpty != true ? "root" : name).join(", ")} "
+      "[${logEnvironment.envName}] Configuring loggers ${config.logLevels.keys.map((name) => name.isNotEmpty != true ? "root" : name).join(", ")} "
       "to use ${config.handler.runtimeType}");
-  RunnerFactory.global.addIsolateInitializer(_configureLoggingIsolate, config);
+
+  logEnvironment.onLogConfig(config);
   config.logLevels.forEach((name, level) {
     final existing = _loggers[name];
     hierarchicalLoggingEnabled = true;
@@ -61,7 +60,7 @@ class LogConfig {
       : logLevels = {loggerName: level};
 
   LogConfig.root(Level level, {this.handler = const ConsoleHandler()})
-      : logLevels = {"": level ?? Level.INFO};
+      : logLevels = {"": level};
 
   LogConfig(
       {this.logLevels = const <String, Level>{"": Level.INFO},
