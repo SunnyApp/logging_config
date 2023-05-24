@@ -2,11 +2,11 @@ name: logging_config
 version: 0.6.7+7
 homepage: https://github.com/SunnyApp/logging_config
 description: A plugin that makes it easier to configure logging handlers and output, including loggers in isolates
-environment:
+environment: 
   sdk: '>=2.12.0 <3.0.0'
-dependencies:
-  js: ^0.6.4
-  logging: ^1.0.2
-dev_dependencies:
-  dartxx:
-    path: /Users/ericm/sunny/local_plugins/dartxx
+dependencies: 
+  js: ^0.6.7
+  logging: ^1.1.1
+dev_dependencies: 
+  dartxx: 
+    path: /Users/ericm/reliveit/checkout/ericmartineau/dartxx
